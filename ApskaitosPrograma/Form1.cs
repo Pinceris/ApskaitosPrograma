@@ -7,17 +7,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace ApskaitosPrograma
-{
-    
+{    
     
     public partial class Form1 : Form
     {
+        private MySqlConnection connection;
+        private string server;
+        private string database;
+        private string user;
+        private string password;
+        private string connectionString;
+
+        public void Login()
+        {
+
+            server = "localhost";
+            database = "test";
+            user = "root";
+            password = "";
+
+            connectionString = String.Format("server={0};user id={1}; password={2}; database={3}", server, user, password, database);
+
+            connection = new MySqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                MessageBox.Show("successful connection");
+
+                connection.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         public Form1()
         {
             InitializeComponent();
+            Login();
             
         }
     public class baldas
@@ -46,5 +78,7 @@ namespace ApskaitosPrograma
             textBox5.Text = skaicL.ToString();
 
         }
+        
     }
+    
 }
