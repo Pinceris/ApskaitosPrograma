@@ -20,8 +20,9 @@ namespace ApskaitosPrograma
         private string user;
         private string password;
         private string connectionString;
+        List<baldas> bSarasas = new List<baldas>();
 
-        public void Login()
+        public List<baldas> Login()
         {
 
             server = "localhost";
@@ -44,6 +45,29 @@ namespace ApskaitosPrograma
             {
                 MessageBox.Show(ex.Message);
             }
+
+
+            string q = "select Pavadinimas, Kaina, Laikas from baldai";
+
+            using (MySqlConnection con = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(q, con))
+                {
+                    con.Open();
+
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var ws = new baldas("",0,0);
+                        ws.Pavadinimas = reader.GetString("Pavadinimas");
+                        ws.Kaina = reader.GetInt32("Kaina");
+                        ws.Laiko = reader.GetInt32("Laikas");
+                        bSarasas.Add(ws);
+                    }
+                    reader.Close();
+                    return bSarasas;
+                }
+            }
         }
 
         public Form1()
@@ -52,30 +76,25 @@ namespace ApskaitosPrograma
             Login();
             
         }
+
     public class baldas
         {
+            public string Pavadinimas { get; set; }
             public int Kaina { get; set; }
             public Double Laiko { get; set; }
-            public baldas(int kaina, double laiko)
+            public baldas(string pavadinimas, int kaina, double laiko)
             {
+                Pavadinimas = pavadinimas;
                 Kaina = kaina;
                 Laiko = laiko;
             }
         }
-        int kKainas = 20;
-        baldas kede = new baldas(10, 1);
-        baldas stalas = new baldas(50, 2);
-        baldas sofa = new baldas(100, 3);
+        
+        
+        
         private void buttonMain_Click(object sender, EventArgs e)
         {
-            int kiekK = Convert.ToInt32(textBox1.Text);
-            int kiekS = Convert.ToInt32(textBox2.Text);
-            int kiekSo = Convert.ToInt32(textBox3.Text);
-
-            int skaicK = (kiekK * kede.Kaina)+ (kiekS * stalas.Kaina)+ (kiekSo * sofa.Kaina);
-            double skaicL = (kede.Laiko * kiekK) + (kede.Laiko * kiekS) + (kede.Laiko * kiekSo);
-            textBox4.Text = skaicK.ToString();
-            textBox5.Text = skaicL.ToString();
+            
 
         }
         
