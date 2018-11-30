@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BaldaiService
 {
-
+    
     public static List<Baldas> getBaldai()
     {
         List<Baldas> bSarasas = new List<Baldas>();
@@ -30,5 +30,18 @@ public class BaldaiService
                 return bSarasas;
             }
         }
+    }
+    public static void insertOrder(int chair, int table, int sofa, int totalsum)
+    {
+        MySqlConnection con = MySqlService.getConnection();
+        con.Open();
+        MySqlCommand comm = con.CreateCommand();
+        comm.CommandText = "INSERT INTO uzsakymai(kedes,stalai,sofos,suma) VALUES(@kedes, @stalai, @sofos, @suma)";
+        comm.Parameters.AddWithValue("@kedes", chair);
+        comm.Parameters.AddWithValue("@stalai", table);
+        comm.Parameters.AddWithValue("@sofos", sofa);
+        comm.Parameters.AddWithValue("@suma", totalsum);
+        comm.ExecuteNonQuery();
+        con.Close();
     }
 }

@@ -15,15 +15,12 @@ namespace ApskaitosPrograma
     public partial class Form1 : Form
     {
 
-        public List<Baldas> Login()
-        {
-            return BaldaiService.getBaldai();
-        }
-
+        public List<Baldas> baldai = BaldaiService.getBaldai();
+        
         public Form1()
         {
             InitializeComponent();
-            Login();
+          
             
         }
       
@@ -31,13 +28,32 @@ namespace ApskaitosPrograma
         private void buttonMain_Click(object sender, EventArgs e)
         {
             
+            int kaina = (baldai[0].Kaina * Convert.ToInt32(textBox1.Text))+ (baldai[1].Kaina * Convert.ToInt32(textBox2.Text)) + (baldai[2].Kaina * Convert.ToInt32(textBox3.Text));
+            int laikas = (int) (baldai[0].Laiko * Convert.ToInt32(textBox1.Text) + baldai[1].Laiko * Convert.ToInt32(textBox2.Text) + baldai[2].Laiko * Convert.ToInt32(textBox3.Text));
+
+            textBox4.Text = Convert.ToString(kaina);
+            textBox5.Text = Convert.ToString(laikas);
+
+
+            MessageBox.Show("Press 'Confirm' if you wish to place the order");
+            int kedes = 0;
+            int stalai = 0;
+            int sofos = 0;
+            int suma = 0;
+
+            int.TryParse(textBox1.Text, out kedes);
+            int.TryParse(textBox2.Text, out stalai);
+            int.TryParse(textBox3.Text, out sofos);
+            int.TryParse(textBox4.Text, out suma);
+
+            BaldaiService.insertOrder(kedes, stalai, sofos, suma);
 
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
     }
-    
 }
+    
