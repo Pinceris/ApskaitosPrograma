@@ -17,7 +17,7 @@ public class BaldaiService
                 {
                     con.Open();
                     return extractBaldai(cmd);
-                } catch(Exception e)
+                } catch (Exception e)
                 {
                     MessageBox.Show("Unable to connect to MySql");
                     List<Baldas> baldai = new List<Baldas>();
@@ -26,8 +26,8 @@ public class BaldaiService
                     baldai.Add(new Baldas(Tipas.SOFA, 10, 5));
                     return baldai;
                 }
-                
-                
+
+
             }
         }
     }
@@ -50,14 +50,14 @@ public class BaldaiService
 
     public static void insertOrder(int chair, int table, int sofa, int totalsum)
     {
-        using(MySqlConnection con = MySqlService.getConnection())
+        using (MySqlConnection con = MySqlService.getConnection())
         {
             try
             {
                 con.Open();
                 AddBaldas(chair, table, sofa, totalsum, con);
                 MessageBox.Show("Your order was placed");
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 MessageBox.Show("Unable to connect to MySql");
             }

@@ -10,17 +10,18 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace ApskaitosPrograma
-{    
-    
+{
+
     public partial class Form1 : Form
     {
 
         public List<Baldas> baldai;
-        
+
         public Form1()
         {
             baldai = BaldaiService.getBaldai();
             InitializeComponent();
+            initTable();
         }
 
         private void initTable()
@@ -35,7 +36,7 @@ namespace ApskaitosPrograma
         {
             int kaina = 0;
             int laikas = 0;
-            
+
             foreach (Baldas b in baldai)
             {
                 switch (b.Tipas)
@@ -52,7 +53,7 @@ namespace ApskaitosPrograma
                         kaina += calculatePrice(b, textBox3.Text);
                         laikas += calculateTime(b, textBox3.Text);
                         break;
-                }                  
+                }
             }
 
             textBox4.Text = Convert.ToString(kaina);
@@ -121,6 +122,7 @@ namespace ApskaitosPrograma
         {
 
         }
+
     }
 }
     
